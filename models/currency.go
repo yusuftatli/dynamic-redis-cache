@@ -13,9 +13,9 @@ func RespondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	_, _ = w.Write(response)
 }
 
-type CurrencyModel struct{
-	Currency  string `json:currency`
-	Data float64 `json:data`
+type CurrencyModel struct {
+	Currency string  `json:currency`
+	Data     float64 `json:data`
 }
 
 type ProviderResponse struct {

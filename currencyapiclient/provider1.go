@@ -14,7 +14,7 @@ type CurrencyProvider1 struct {
 	httpClient httpclient.Client
 }
 
-func (p CurrencyProvider1) Handle(channel chan ProviderResponse, waitGroup *sync.WaitGroup) {
+func (p CurrencyProvider1) Handle(channel chan models.ProviderResponse, waitGroup *sync.WaitGroup) {
 	defer waitGroup.Done()
 	req, err := http.NewRequest("GET", p.config.Url, nil)
 	if err != nil {
@@ -22,7 +22,7 @@ func (p CurrencyProvider1) Handle(channel chan ProviderResponse, waitGroup *sync
 		return
 	}
 
-	response := ProviderResponse{}
+	response := models.ProviderResponse{}
 	if err := p.httpClient.SendRequest(req, &response); err != nil {
 		return
 	}

@@ -14,14 +14,14 @@ type CurrencyProvider3 struct {
 	httpClient httpclient.Client
 }
 
-func (p CurrencyProvider3) Handle(channel chan ProviderResponse, waitGroup *sync.WaitGroup) {
+func (p CurrencyProvider3) Handle(channel chan models.ProviderResponse, waitGroup *sync.WaitGroup) {
 	defer waitGroup.Done()
 	req, err := http.NewRequest("GET", p.config.Url, nil)
 	if err != nil {
 		log.Println("an error occured when creating request.", err)
 	}
 
-	response := ProviderResponse{}
+	response := models.ProviderResponse{}
 	if err := p.httpClient.SendRequest(req, &response); err != nil {
 		return
 	}

@@ -11,18 +11,12 @@ import (
 )
 
 type ICurrencyProvider interface {
-	Handle(channel chan ProviderResponse, waitGroup *sync.WaitGroup)
+	Handle(channel chan models.ProviderResponse, waitGroup *sync.WaitGroup)
 }
 
 type CurrencyProvider struct {
 	cfg       models.ProviderConfig
 	providers []ICurrencyProvider
-}
-
-type ProviderResponse struct {
-	Eur float64 `json:"EUR"`
-	Usd float64 `json:"USD"`
-	Gbp float64 `json:"GBP"`
 }
 
 func NewCurrencyProviderHandler(cfg *models.ProviderConfig, httpClient *httpclient.Client) *CurrencyProvider {
@@ -48,7 +42,7 @@ func NewCurrencyProviderHandler(cfg *models.ProviderConfig, httpClient *httpclie
 
 func (currencyProvider *CurrencyProvider) GetCurrenies() {
 	var waitGroup sync.WaitGroup
-	channel := make(chan ProviderResponse)
+	channel := make(chan models.ProviderResponse)
 
 	for _, provider := range currencyProvider.providers {
 		waitGroup.Add(1)
