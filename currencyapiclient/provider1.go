@@ -1,4 +1,4 @@
-package apiclient
+package currencyapiclient
 
 import (
 	"log"
@@ -6,22 +6,20 @@ import (
 	"sync"
 
 	"github.com/yusuftatli/hepsiburada/httpclient"
+	"github.com/yusuftatli/hepsiburada/models"
 )
 
-type Provider2Config struct {
-	Url string `yaml:"url"`
-}
-
-type CurrencyProvider2 struct {
-	config     Provider2Config
+type CurrencyProvider1 struct {
+	config     models.Provider1Config
 	httpClient httpclient.Client
 }
 
-func (p CurrencyProvider2) Handle(channel chan ProviderResponse, waitGroup *sync.WaitGroup) {
+func (p CurrencyProvider1) Handle(channel chan ProviderResponse, waitGroup *sync.WaitGroup) {
 	defer waitGroup.Done()
 	req, err := http.NewRequest("GET", p.config.Url, nil)
 	if err != nil {
 		log.Println("an error occured when creating request.", err)
+		return
 	}
 
 	response := ProviderResponse{}

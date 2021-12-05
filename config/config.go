@@ -1,29 +1,15 @@
-package apiclient
+package config
 
 import (
 	"fmt"
 	"os"
 	"path"
 
+	"github.com/yusuftatli/hepsiburada/models"
 	"gopkg.in/yaml.v2"
 )
 
-type ProviderConfig struct {
-	Provider1 Provider1Config `yaml:"provider1"`
-	Provider2 Provider2Config `yaml:"provider2"`
-	Provider3 Provider3Config `yaml:"provider3"`
-}
-
-// type ProviderConfig struct {
-// 	Provider1 struct {
-// 		url string `yaml:"url"`
-// 	} `yaml:"provider1"`
-// 	Provider2 struct {
-// 		url string `yaml:"url"`
-// 	} `yaml:"provider2"`
-// }
-
-func NewDefaultConfig() (*ProviderConfig, error) {
+func NewDefaultConfig() (*models.ProviderConfig, error) {
 	configFilePath, err := getFilePath("config.yml")
 	if err != nil {
 		return nil, err
@@ -38,7 +24,7 @@ func NewDefaultConfig() (*ProviderConfig, error) {
 
 	defer file.Close()
 
-	cfg := new(ProviderConfig)
+	cfg := new(models.ProviderConfig)
 	decoder := yaml.NewDecoder(file)
 	err = decoder.Decode(&cfg)
 	if err != nil {

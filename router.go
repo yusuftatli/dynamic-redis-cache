@@ -5,15 +5,14 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/yusuftatli/hepsiburada/common"
+	"github.com/yusuftatli/hepsiburada/config"
 	"github.com/yusuftatli/hepsiburada/handlers"
 )
 
-
-func InitializeRoutes(env *common.Environment) {
+func InitializeRoutes(env *config.Environment) {
 
 	api := mux.NewRouter().PathPrefix("/").Subrouter()
 	api.HandleFunc("/currency/{currencyCode}", handlers.GetCurrency).Methods(http.MethodGet)
 
-	log.Fatal(http.ListenAndServe(":8081",api))
+	log.Fatal(http.ListenAndServe(":8081", api))
 }

@@ -1,4 +1,4 @@
-package apiclient
+package currencyapiclient
 
 import (
 	"encoding/json"
@@ -15,7 +15,7 @@ type ICurrencyProvider interface {
 }
 
 type CurrencyProvider struct {
-	cfg       ProviderConfig
+	cfg       models.ProviderConfig
 	providers []ICurrencyProvider
 }
 
@@ -25,7 +25,7 @@ type ProviderResponse struct {
 	Gbp float64 `json:"GBP"`
 }
 
-func NewCurrencyProviderHandler(cfg *ProviderConfig, httpClient *httpclient.Client) *CurrencyProvider {
+func NewCurrencyProviderHandler(cfg *models.ProviderConfig, httpClient *httpclient.Client) *CurrencyProvider {
 
 	return &CurrencyProvider{
 		cfg: *cfg,
@@ -61,20 +61,20 @@ func (currencyProvider *CurrencyProvider) GetCurrenies() {
 	}()
 
 	var arrEur []float64
-		 var arrUsd []float64
-		 var arrGbp []float64
-		for msg := range channel {
-			arrEur= append(arrEur, msg.Eur)
-			arrUsd= append(arrUsd, msg.Usd)
-			arrGbp= append(arrGbp, msg.Gbp)
-		}
-	 		eurModel := &models.CurrencyModel{Currency: "EURO", Data: sort.Float64Slice(arrEur)[0]}
-	 		eurValue, _ := json.Marshal(eurModel)
-			usdModel := &models.CurrencyModel{Currency: "USD", Data: sort.Float64Slice(arrUsd)[0]}
-	 		usdValue, _ := json.Marshal(usdModel)
-			gbpModel := &models.CurrencyModel{Currency: "GBP", Data: sort.Float64Slice(arrGbp)[0]}
-	 		gbpValue, _ := json.Marshal(gbpModel)
-			cache.Initialize().GetKey("EURO", eurValue)
-			cache.Initialize().GetKey("USD", usdValue)
-			cache.Initialize().GetKey("GBP", gbpValue)
+	var arrUsd []float64
+	var arrGbp []float64
+	for msg := range channel {
+		arrEur = append(arrEur, msg.Eur)
+		arrUsd = append(arrUsd, msg.Usd)
+		arrGbp = append(arrGbp, msg.Gbp)
+	}
+	eurModel := &models.CurrencyModel{Currency: "EURO", Data: sort.Float64Slice(arrEur)[0]}
+	eurValue, _ := json.Marshal(eurModel)
+	usdModel := &models.CurrencyModel{Currency: "USD", Data: sort.Float64Slice(arrUsd)[0]}
+	usdValue, _ := json.Marshal(usdModel)
+	gbpModel := &models.CurrencyModel{Currency: "GBP", Data: sort.Float64Slice(arrGbp)[0]}
+	gbpValue, _ := json.Marshal(gbpModel)
+	cache.Initialize().GetKey("EURO", eurValue)
+	cache.Initialize().GetKey("USD", usdValue)
+	cache.Initialize().GetKey("GBP", gbpValue)
 }

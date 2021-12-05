@@ -1,4 +1,4 @@
-package apiclient
+package currencyapiclient
 
 import (
 	"log"
@@ -6,14 +6,11 @@ import (
 	"sync"
 
 	"github.com/yusuftatli/hepsiburada/httpclient"
+	"github.com/yusuftatli/hepsiburada/models"
 )
 
-type Provider3Config struct {
-	Url string `yaml:"url"`
-}
-
 type CurrencyProvider3 struct {
-	config     Provider3Config
+	config     models.Provider3Config
 	httpClient httpclient.Client
 }
 
