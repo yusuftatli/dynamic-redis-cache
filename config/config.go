@@ -1,7 +1,7 @@
 package config
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"path"
 
@@ -17,7 +17,7 @@ func NewDefaultConfig() (*models.ProviderConfig, error) {
 
 	file, err := os.Open(configFilePath)
 	if err != nil {
-		fmt.Errorf("Failed to open config.yml file", err)
+		log.Panicln("Failed to open config.yml file", err)
 		// errors.Wrap(err, "Failed to open config.yml file")
 		return nil, err
 	}
@@ -28,7 +28,7 @@ func NewDefaultConfig() (*models.ProviderConfig, error) {
 	decoder := yaml.NewDecoder(file)
 	err = decoder.Decode(&cfg)
 	if err != nil {
-		fmt.Errorf("Failed to decode yaml config", err)
+		log.Panicln("Failed to decode yaml config", err)
 	}
 
 	return cfg, nil

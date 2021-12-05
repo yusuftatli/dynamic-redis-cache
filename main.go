@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/yusuftatli/hepsiburada/config"
 	"github.com/yusuftatli/hepsiburada/jobs"
@@ -14,7 +14,7 @@ func main() {
 	//get config
 	cfg, err := config.NewDefaultConfig()
 	if err != nil {
-		fmt.Errorf("failed to load config")
+		log.Panicln("failed to load config")
 	}
 
 	jobs.GetCurrencyJob(cfg)
